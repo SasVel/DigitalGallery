@@ -23,6 +23,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".ArtOfTheDay"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/art_of_the_day_info" />
+        </receiver>
+
+        <activity
+            android:name=".SavedGallery"
+            android:exported="false"
+            android:label="@string/title_activity_saved_gallery"
+            android:theme="@style/Theme.DigitalGallery.NoActionBar" />
     </application>
 
 </manifest>

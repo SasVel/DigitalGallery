@@ -3,6 +3,8 @@ package com.f112992.digitalgallery;
 import android.os.Looper;
 import android.os.Handler;
 
+import com.f112992.digitalgallery.database.SourceDBModel;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,8 +38,7 @@ public class HarvardArtRouter {
             if (response.isSuccessful()) {
                 result = response.body().string();
                 resObj = new JSONObject(result);
-                int test = resObj.getJSONObject("info").getInt("totalrecords");
-                totalRecords = test;
+                totalRecords = resObj.getJSONObject("info").getInt("totalrecords");
             } else {
                 System.out.println("Request failed: " + response.code());
             }

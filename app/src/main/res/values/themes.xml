@@ -6,4 +6,28 @@
     </style>
 
     <style name="Theme.DigitalGallery" parent="Base.Theme.DigitalGallery" />
+
+    <style name="Theme.DigitalGallery.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
+        <!-- Radius of the outer bound of widgets to make the rounded corners -->
+        <item name="appWidgetRadius">16dp</item>
+        <!--
+        Radius of the inner view's bound of widgets to make the rounded corners.
+        It needs to be 8dp or less than the value of appWidgetRadius
+        -->
+        <item name="appWidgetInnerRadius">8dp</item>
+    </style>
+
+    <style name="Theme.DigitalGallery.AppWidgetContainer" parent="Theme.DigitalGallery.AppWidgetContainerParent">
+        <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
+        <item name="appWidgetPadding">16dp</item>
+    </style>
+
+    <style name="Theme.DigitalGallery.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.DigitalGallery.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.DigitalGallery.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

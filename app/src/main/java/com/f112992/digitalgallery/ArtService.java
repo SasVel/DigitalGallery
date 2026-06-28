@@ -6,12 +6,11 @@ import org.json.JSONObject;
 
 public class ArtService {
     public static ArtData getHarvardArtObjectData() {
-        ArtData data = new ArtData();
         String objID = HarvardArtRouter.getRandObjectRecordString();
         JSONObject obj = HarvardArtRouter.getObject(objID);
-
+        ArtData data;
         try {
-            data.title = HarvardArtRouter.getObjectTitle(obj);
+            data = new ArtData(objID, HarvardArtRouter.getObjectTitle(obj), DBHelper.harvardSourceModel.ID);
             String description = HarvardArtRouter.getObjectDesc(obj);
             if (!description.isEmpty()) {
                 data.description = description;
@@ -21,7 +20,7 @@ public class ArtService {
             data.source = obj.getString("creditline");
             data.externalLink = obj.getString("url");
         } catch (JSONException e) {
-            return data;
+            return null;
         }
         return data;
     }

@@ -18,8 +18,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.f112992.digitalgallery.database.ArtPieceDBModel;
+import com.f112992.digitalgallery.database.SourceDBModel;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     ExecutorService executor = Executors.newSingleThreadExecutor();
     Handler handler = new Handler(Looper.getMainLooper());
+    DBHelper dbHelper = new DBHelper(MainActivity.this);
     ArtData loadedData;
 
     @Override
@@ -43,19 +48,19 @@ public class MainActivity extends AppCompatActivity {
         TextView titleView = findViewById(R.id.title);
         TextView descView = findViewById(R.id.description);
         TextView creditsView = findViewById(R.id.credits);
-        Button readMoreBtn = findViewById(R.id.read_more_btn);
 
         executor.execute(() -> {
+            dbHelper.config();
             HarvardArtRouter.config();
             ArtData data = ArtService.getHarvardArtObjectData();
             loadedData = data;
             Bitmap bmp = null;
-            if (!data.imageURL.isEmpty()) {
+            if (!data.imageURL.equals("null") && !data.imageURL.isEmpty()) {
                 try {
                     URL url = new URL(data.imageURL);
                     bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Failed to retrieve image.");
                 }
             }
 
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 titleView.setText(data.title);
                 descView.setText(data.description);
                 creditsView.setText(data.source);
+                dbHelper.insertArtPiece(new ArtPieceDBModel(data));
             });
         });
     }
