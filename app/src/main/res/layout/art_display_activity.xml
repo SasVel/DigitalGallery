@@ -5,7 +5,7 @@
     android:id="@+id/art_display"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ArtOfTheDayActivity">
+    tools:context=".ArtDisplayActivity">
 
     <ImageButton
         android:layout_width="60dp"

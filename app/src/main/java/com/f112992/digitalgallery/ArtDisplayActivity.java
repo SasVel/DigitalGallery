@@ -22,11 +22,11 @@ import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ArtOfTheDayActivity extends AppCompatActivity {
+public class ArtDisplayActivity extends AppCompatActivity {
 
     ExecutorService executor = Executors.newSingleThreadExecutor();
     Handler handler = new Handler(Looper.getMainLooper());
-    DBHelper dbHelper = new DBHelper(ArtOfTheDayActivity.this);
+    DBHelper dbHelper = new DBHelper(ArtDisplayActivity.this);
     ArtData data;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
@@ -49,17 +49,24 @@ public class ArtOfTheDayActivity extends AppCompatActivity {
         executor.execute(() -> {
             dbHelper.config();
             HarvardArtRouter.config();
-            ArtPieceDBModel dbModel = dbHelper.getDailyArtPiece();
 
-            if (dbModel == null) {
-                // If the model is null, get a new art piece for the daily.
-                data = ArtService.getHarvardArtRandObjectData();
-                data.isDaily = true;
-                dbHelper.insertArtPiece(new ArtPieceDBModel(data));
-            }
-            else {
-                // If it's not, there is already a daily saved, retrieve the data for that specific piece.
-                data = ArtService.getHarvardArtObjectData(dbModel.externalID);
+            String objID = getIntent().hasExtra("art_id") ? getIntent().getStringExtra("art_id") : null;
+
+            if (objID != null) {
+                data = ArtService.getHarvardArtObjectData(objID);
+            } else {
+                ArtPieceDBModel dbModel = dbHelper.getDailyArtPiece();
+
+                if (dbModel == null) {
+                    // If the model is null, get a new art piece for the daily.
+                    data = ArtService.getHarvardArtRandObjectData();
+                    data.isDaily = true;
+                    dbHelper.insertArtPiece(new ArtPieceDBModel(data));
+                }
+                else {
+                    // If it's not, there is already a daily saved, retrieve the data for that specific piece.
+                    data = ArtService.getHarvardArtObjectData(dbModel.externalID);
+                }
             }
 
             Bitmap bmp = null;

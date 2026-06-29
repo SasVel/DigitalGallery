@@ -41,6 +41,8 @@ android {
 
 dependencies {
     implementation(libs.activity.ktx)
+    implementation(libs.fragment.ktx)
+    implementation(libs.recyclerview)
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
     implementation(libs.material)

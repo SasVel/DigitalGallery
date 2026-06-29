@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onDailyArtBtnPress(View view) {
-        Intent artDisplayIntent = new Intent(this, ArtOfTheDayActivity.class);
+        Intent artDisplayIntent = new Intent(this, ArtDisplayActivity.class);
         startActivity(artDisplayIntent);
     }
 
