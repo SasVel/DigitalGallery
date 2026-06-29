@@ -14,3 +14,4 @@
 .cxx
 local.properties
 .env
+app/src/main/java/com/f112992/digitalgallery/Env.java
