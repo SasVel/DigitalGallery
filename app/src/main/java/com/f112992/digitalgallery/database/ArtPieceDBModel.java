@@ -1,11 +1,11 @@
 package com.f112992.digitalgallery.database;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.f112992.digitalgallery.ArtData;
 
 import java.sql.Date;
-import java.util.List;
 
 public class ArtPieceDBModel {
 
@@ -16,6 +16,16 @@ public class ArtPieceDBModel {
     public Date dateAdded;
     public int rating;
     public boolean isDaily;
+
+    public ArtPieceDBModel(Cursor cursor) {
+        this.ID = cursor.getInt(0);
+        this.externalID = cursor.getString(1);
+        this.title = cursor.getString(2);
+        this.sourceID = cursor.getInt(3);
+        this.dateAdded = Date.valueOf(cursor.getString(4));
+        this.rating = cursor.getInt(5);
+        this.isDaily = Boolean.parseBoolean(String.valueOf(cursor.getInt(6)));
+    }
 
     public ArtPieceDBModel(ArtData data) {
         this.ID = data.ID;

@@ -33,11 +33,16 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(SourceDBModel.SQL_TABLE_CREATION_STR);
         db.execSQL(ArtPieceDBModel.SQL_TABLE_CREATION_STR);
 
+        insertSource(new SourceDBModel("Harvard Art Museum"));
         insertSource(new SourceDBModel("European Arts"));
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion == newVersion) {
+            return;
+        }
+
         db.execSQL("DROP TABLE IF EXISTS " + ArtPieceDBModel.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SourceDBModel.TABLE_NAME);
 
@@ -76,24 +81,42 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return sources;
     }
+    public ArtPieceDBModel getArtPiece(String objID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + ArtPieceDBModel.TABLE_NAME + " WHERE ID == " + objID;
+        Cursor cursor = db.rawQuery(query, null);
+        ArtPieceDBModel source = null;
+        if (cursor.moveToFirst()) {
+            source = new ArtPieceDBModel(cursor);
+        }
+        db.close();
+        return source;
+    }
+
+    public ArtPieceDBModel getDailyArtPiece() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + ArtPieceDBModel.TABLE_NAME + " WHERE DATE_ADDED='" + new Date(System.currentTimeMillis()) + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        ArtPieceDBModel source = null;
+        if (cursor.moveToFirst()) {
+            source = new ArtPieceDBModel(cursor);
+        }
+        db.close();
+        return source;
+    }
 
     public List<ArtPieceDBModel> getAllArtPieces() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + ArtPieceDBModel.TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
         List<ArtPieceDBModel> artPieces = new ArrayList<>();
-        do {
-            artPieces.add(new ArtPieceDBModel(
-                    cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getInt(3),
-                    Date.valueOf(cursor.getString(4)),
-                    cursor.getInt(5),
-                    Boolean.parseBoolean(String.valueOf(cursor.getInt(6)))
-            ));
+        if (cursor.moveToFirst()) {
+
+            do {
+                artPieces.add(new ArtPieceDBModel(cursor));
+            }
+            while (cursor.moveToNext());
         }
-        while (cursor.moveToNext());
         db.close();
         return artPieces;
     }
@@ -110,7 +133,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = entry.generateContentValues();
 
-        long insertedID = db.insert(SourceDBModel.TABLE_NAME, null, values);
+        long insertedID = db.insert(ArtPieceDBModel.TABLE_NAME, null, values);
         db.close();
         return insertedID;
     }

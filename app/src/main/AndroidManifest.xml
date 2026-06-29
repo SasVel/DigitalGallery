@@ -25,7 +25,7 @@
         </activity>
 
         <receiver
-            android:name=".ArtOfTheDay"
+            android:name=".ArtOfTheDayWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -41,6 +41,13 @@
             android:exported="false"
             android:label="@string/title_activity_saved_gallery"
             android:theme="@style/Theme.DigitalGallery.NoActionBar" />
+
+        <activity
+            android:name=".ArtOfTheDayActivity"
+            android:exported="false"
+            android:label="ArtDisplay"
+            android:theme="@style/Theme.DigitalGallery.NoActionBar" />
+
     </application>
 
 </manifest>

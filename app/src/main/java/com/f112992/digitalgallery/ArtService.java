@@ -1,12 +1,11 @@
 package com.f112992.digitalgallery;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ArtService {
-    public static ArtData getHarvardArtObjectData() {
-        String objID = HarvardArtRouter.getRandObjectRecordString();
+
+    public static ArtData getHarvardArtObjectData(String objID) {
         JSONObject obj = HarvardArtRouter.getObject(objID);
         ArtData data;
         try {
@@ -23,5 +22,10 @@ public class ArtService {
             return null;
         }
         return data;
+    }
+
+    public static ArtData getHarvardArtRandObjectData() {
+        String objID = HarvardArtRouter.getRandObjectRecordString();
+        return getHarvardArtObjectData(objID);
     }
 }

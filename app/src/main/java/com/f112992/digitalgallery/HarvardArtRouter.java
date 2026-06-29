@@ -27,7 +27,7 @@ public class HarvardArtRouter {
     public static int totalRecords = 200;
 
     public static void config() {
-        JSONObject resObj = new JSONObject();
+        JSONObject resObj;
         String result = "";
 
         Request request = new Request.Builder()
@@ -133,7 +133,7 @@ public class HarvardArtRouter {
     }
 
     public static String getObjectDesc(JSONObject obj) {
-        JSONArray contextualText = null;
+        JSONArray contextualText;
         try {
             contextualText = obj.getJSONArray("contextualtext");
             return contextualText

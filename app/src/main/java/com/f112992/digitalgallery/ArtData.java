@@ -1,5 +1,7 @@
 package com.f112992.digitalgallery;
 
+import com.f112992.digitalgallery.database.ArtPieceDBModel;
+
 import java.sql.Date;
 
 public class ArtData {
@@ -20,6 +22,15 @@ public class ArtData {
         this.title = title;
         this.dateAdded = new Date(System.currentTimeMillis());
         this.rating = -1;
+    }
+
+    public ArtData(ArtPieceDBModel model) {
+        this.ID = model.ID;
+        this.externalID = model.externalID;
+        this.sourceID = model.sourceID;
+        this.title = model.title;
+        this.dateAdded = model.dateAdded;
+        this.rating = model.rating;
     }
 
     public ArtData(int ID, String externalID, int sourceID, String title, String description, String imageURL, String source, String externalLink, Date dateAdded, int rating) {
