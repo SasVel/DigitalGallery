@@ -40,13 +40,15 @@
             android:name=".SavedGalleryActivity"
             android:exported="false"
             android:label="@string/title_activity_saved_gallery"
-            android:theme="@style/Theme.DigitalGallery.NoActionBar" />
+            android:theme="@style/Theme.DigitalGallery.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
 
         <activity
             android:name=".ArtOfTheDayActivity"
             android:exported="false"
             android:label="ArtDisplay"
-            android:theme="@style/Theme.DigitalGallery.NoActionBar" />
+            android:theme="@style/Theme.DigitalGallery.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
 
     </application>
 

@@ -93,4 +93,8 @@ public class ArtOfTheDayActivity extends AppCompatActivity {
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);
     }
+
+    public void onBackPressed(View view) {
+        getOnBackPressedDispatcher().onBackPressed();
+    }
 }

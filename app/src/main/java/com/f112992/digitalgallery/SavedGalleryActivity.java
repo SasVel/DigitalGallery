@@ -29,4 +29,8 @@ public class SavedGalleryActivity extends AppCompatActivity {
             main.addView(component);
         }
     }
+
+    public void onBackPressed(View view) {
+        getOnBackPressedDispatcher().onBackPressed();
+    }
 }
