@@ -49,13 +49,16 @@ public class ArtOfTheDayActivity extends AppCompatActivity {
         executor.execute(() -> {
             dbHelper.config();
             HarvardArtRouter.config();
-            var test = dbHelper.getAllArtPieces();
             ArtPieceDBModel dbModel = dbHelper.getDailyArtPiece();
+
             if (dbModel == null) {
+                // If the model is null, get a new art piece for the daily.
                 data = ArtService.getHarvardArtRandObjectData();
+                data.isDaily = true;
                 dbHelper.insertArtPiece(new ArtPieceDBModel(data));
             }
             else {
+                // If it's not, there is already a daily saved, retrieve the data for that specific piece.
                 data = ArtService.getHarvardArtObjectData(dbModel.externalID);
             }
 

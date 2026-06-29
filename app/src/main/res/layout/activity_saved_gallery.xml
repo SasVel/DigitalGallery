@@ -5,11 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".SavedGallery">
-
-    <include layout="@layout/gallery_item_component"/>
-    <include layout="@layout/gallery_item_component"/>
-    <include layout="@layout/gallery_item_component"/>
-    <include layout="@layout/gallery_item_component"/>
-    <include layout="@layout/gallery_item_component"/>
+    tools:context=".SavedGalleryActivity"
+    android:id="@+id/main"
+    >
 </LinearLayout>

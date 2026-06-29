@@ -95,7 +95,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArtPieceDBModel getDailyArtPiece() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + ArtPieceDBModel.TABLE_NAME + " WHERE DATE_ADDED='" + new Date(System.currentTimeMillis()) + "'";
+        String query = "SELECT * FROM " + ArtPieceDBModel.TABLE_NAME + " WHERE DATE_ADDED='" + new Date(System.currentTimeMillis()) + "' AND IS_DAILY=1";
         Cursor cursor = db.rawQuery(query, null);
         ArtPieceDBModel source = null;
         if (cursor.moveToFirst()) {
@@ -105,9 +105,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return source;
     }
 
-    public List<ArtPieceDBModel> getAllArtPieces() {
+    public List<ArtPieceDBModel> getAllArtPieces(boolean hasDaily) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + ArtPieceDBModel.TABLE_NAME;
+
+        if (!hasDaily) {
+            query += " WHERE IS_DAILY=0";
+        }
+
         Cursor cursor = db.rawQuery(query, null);
         List<ArtPieceDBModel> artPieces = new ArrayList<>();
         if (cursor.moveToFirst()) {
